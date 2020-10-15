@@ -10,7 +10,7 @@ namespace GraphicsEditor
 {
     class Group : Figure
     {
-        private Group(int x, int y, int width, int height) : base(x, y, width, height) { }
+        public Group(int x, int y, int width, int height) : base(x, y, width, height) { }
 
         List<Figure> figures = new List<Figure>();
 
@@ -24,6 +24,8 @@ namespace GraphicsEditor
         {
             foreach (Figure figure in figures)
             {
+                if (figure == null) return false;
+
                 if (figure.Touch(x, y))
                     return true;
             }
@@ -58,23 +60,41 @@ namespace GraphicsEditor
 
         public void Add(Figure figure){ figures.Add(figure); }
 
-        public void Clear(){ figures.Clear(); }
+        public void Clear(){ 
+            figures.Clear();
+            X = 0;
+            Y = 0;
+            width = 0;
+            height = 0;
+        }
 
         public void Update()
         {
-            foreach(Figure figure in figures)
-            {
-                //X = figure.X < X ? figure.X : X;
-                //Y = figure.Y < Y ? figure.Y : Y;
-                if (figure.X < X)
-                    X = figure.X;
-                if (figure.Y < Y)
-                    Y = figure.Y;
-                if (figure.X + figure.width - X > width)
-                    width = figure.X + figure.width - X;
-                if (figure.Y + figure.height - Y > height)
-                    height = figure.Y + figure.height - Y;
-            }
+            X = figures.Min(f => f.X);
+            Y = figures.Min(f => f.Y);
+
+            width = figures.Max(f => f.X + f.width) - X;
+            height = figures.Max(f => f.Y + f.height) - Y;
+
+            //foreach (Figure figure in figures)
+            //{
+
+            //    if (figure.Y + figure.height > footer)
+            //        footer = figure.Y + figure.height;
+
+            //    if (figure == null) return;
+            //        //X = figure.X < X ? figure.X : X;
+            //        //Y = figure.Y < Y ? figure.Y : Y;
+            //    if (figure.X < X)
+            //        X = figure.X;
+            //    if (figure.Y < Y)
+            //        Y = figure.Y;
+            //    //height = figure.Y + figure.height - Y;
+            //    if (figure.X + figure.width > width)
+            //        width = figure.X + figure.width - X;
+            //    if (figure.Y + figure.height - Y > height)
+            //        height = footer - Y;
+            //}
         }
     }
 }

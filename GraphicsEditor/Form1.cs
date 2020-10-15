@@ -26,6 +26,7 @@ namespace GraphicsEditor
         Figure f;
         Point point;
         bool isDown;
+        Group group;
         Pen blackPen = new Pen(Brushes.Black);
         List<Figure> figures = new List<Figure>();
         List<FigureCreator> tools;
@@ -39,6 +40,7 @@ namespace GraphicsEditor
             tools = new List<FigureCreator>() {
             null, rectCreator, ellipseCreator};
             manipulator = new Manipulator(0, 0, 0, 0);
+            group = new Group(0, 0, 0, 0);
         }
 
         private void cursorTool_Click(object sender, EventArgs e) { currentTool = tools[0]; }
@@ -51,7 +53,11 @@ namespace GraphicsEditor
             point = e.Location;
 
             if (currentTool != null)
+            {
+                group.Clear();
+                manipulator.Clear();
                 f = currentTool.Create(point.X, point.Y, 0, 0);
+            }
 
             else
             {
@@ -66,7 +72,19 @@ namespace GraphicsEditor
                         break;
                     }
                 }
-                manipulator.Attach(f);
+
+                if (Control.ModifierKeys == Keys.Control)
+                {
+                    group.Add(f);
+                    group.Update();
+                    manipulator.Attach(group);
+                }
+                else
+                {
+                    group.Clear();
+                    manipulator.Attach(f);
+                }
+
                 manipulator.Touch(e.X, e.Y);
                 manipulator.Update();
             }
