@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphicsEditor.DragAlghoritm;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -19,6 +20,16 @@ namespace GraphicsEditor
             None
         }
         private Corner corner;
+
+        private Dictionary<Corner, IDragable> dragUsing = new Dictionary<Corner, IDragable> {
+            {Corner.HighLeft, new HighLeftDrag() },
+            {Corner.HighRight, new HightRightDrag()},
+            {Corner.LowLeft, new LowLeftDrag() },
+            {Corner.LowRight, new LowRightDrag() },
+            {Corner.Center, new CenterDrag() },
+            {Corner.None, new NoDrag() }
+        };
+
 
         public Manipulator(int x, int y, int width, int height) : base(x, y, width, height) { }
 
@@ -85,29 +96,7 @@ namespace GraphicsEditor
 
         public void Drag(int dx, int dy)
         {
-            switch (corner)
-            {
-                case Corner.HighLeft:
-                    Figure.Move(Figure.X + dx, Figure.Y + dy);
-                    Figure.Resize(Figure.width - dx, Figure.height - dy);
-                    break;
-                case Corner.HighRight:
-                    Figure.Move(Figure.X, Figure.Y + dy);
-                    Figure.Resize(Figure.width + dx, Figure.height - dy);
-                    break;
-                case Corner.LowRight:
-                    Figure.Resize(Figure.width + dx, Figure.height + dy);
-                    break;
-                case Corner.LowLeft:
-                    Figure.Move(Figure.X + dx, Figure.Y);
-                    Figure.Resize(Figure.width - dx, Figure.height + dy);
-                    break;
-                case Corner.Center:
-                    Figure.Move(Figure.X + dx, Figure.Y + dy);
-                    break;
-                default:
-                    break;
-            }
+            dragUsing[corner].Drag(Figure, dx, dy);
         }
     }
 }

@@ -75,26 +75,22 @@ namespace GraphicsEditor
 
             width = figures.Max(f => f.X + f.width) - X;
             height = figures.Max(f => f.Y + f.height) - Y;
+        }
 
-            //foreach (Figure figure in figures)
-            //{
+       /* public override Figure Clone()
+        {            
+            return new Group(X, Y, width, height);
+        }*/
 
-            //    if (figure.Y + figure.height > footer)
-            //        footer = figure.Y + figure.height;
+        class GroupCreator: FigureCreator
+        {
 
-            //    if (figure == null) return;
-            //        //X = figure.X < X ? figure.X : X;
-            //        //Y = figure.Y < Y ? figure.Y : Y;
-            //    if (figure.X < X)
-            //        X = figure.X;
-            //    if (figure.Y < Y)
-            //        Y = figure.Y;
-            //    //height = figure.Y + figure.height - Y;
-            //    if (figure.X + figure.width > width)
-            //        width = figure.X + figure.width - X;
-            //    if (figure.Y + figure.height - Y > height)
-            //        height = footer - Y;
-            //}
+            Group proto;
+            public override Figure Create(int x, int y, int width, int height)
+            {
+                proto = new Group(x, y, width, height);
+                return proto;
+            }
         }
     }
 }

@@ -20,6 +20,11 @@ namespace GraphicsEditor
                 return true;
             return false;
         }
+
+        /*public override Figure Clone()
+        {
+            return new Rectangle(X, Y, width, height);
+        }*/
         public class RectCreator : FigureCreator
         {
             public override Figure Create(int x, int y, int width, int height)

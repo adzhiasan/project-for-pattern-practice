@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DragAlghoritm\CenterDrag.cs" />
+    <Compile Include="DragAlghoritm\HighLeftDrag.cs" />
+    <Compile Include="DragAlghoritm\HightRightDrag.cs" />
+    <Compile Include="DragAlghoritm\IDragable.cs" />
+    <Compile Include="DragAlghoritm\LowLeftDrag.cs" />
+    <Compile Include="DragAlghoritm\LowRightDrag.cs" />
+    <Compile Include="DragAlghoritm\NoDrag.cs" />
     <Compile Include="Manipulator.cs" />
     <Compile Include="Ellipse.cs" />
     <Compile Include="Figure.cs" />

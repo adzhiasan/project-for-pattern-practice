@@ -55,6 +55,8 @@ namespace GraphicsEditor
             }
         }
 
+        //public abstract Figure Clone();
+
         public abstract bool Touch(int x, int y);
 
         public virtual void Move(int x, int y)

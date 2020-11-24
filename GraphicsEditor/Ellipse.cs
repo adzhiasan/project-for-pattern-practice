@@ -24,6 +24,11 @@ class Ellipse : Figure
                 return true;
             return false;
         }
+
+/*        public override Figure Clone()
+        {
+            return new Ellipse(X, Y, width, height);
+        }*/
         public class EllipseCreator : FigureCreator
         {
             public override Figure Create(int x, int y, int width, int height)
