@@ -32,13 +32,16 @@ namespace GraphicsEditor
             return false;
         }
 
-        public override void Move(int dx, int dy)
+        public override void Move(int x, int y)
         {
+            int dx = x - X;
+            int dy = y - Y;
             foreach (Figure figure in figures)
             {
                 figure.X += dx;
                 figure.Y += dy;
             }
+            this.Update();
         }
 
         public override void Resize(int width, int height)

@@ -32,6 +32,7 @@ namespace GraphicsEditor
         List<FigureCreator> tools;
         FigureCreator currentTool;
         Manipulator manipulator;
+        FigureHistory history;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -41,6 +42,7 @@ namespace GraphicsEditor
             null, rectCreator, ellipseCreator};
             manipulator = new Manipulator(0, 0, 0, 0);
             group = new Group(0, 0, 0, 0);
+            history = new FigureHistory();
         }
 
         private void cursorTool_Click(object sender, EventArgs e) { currentTool = tools[0]; }
@@ -57,6 +59,7 @@ namespace GraphicsEditor
                 group.Clear();
                 manipulator.Clear();
                 f = currentTool.Create(point.X, point.Y, 0, 0);
+                history.History.Push((f, f.SaveState()));
             }
 
             else
@@ -69,6 +72,9 @@ namespace GraphicsEditor
                     {
                         f = figure;
                         point = e.Location;
+
+                        history.History.Push((f, f.SaveState()));
+
                         break;
                     }
                 }
@@ -107,8 +113,6 @@ namespace GraphicsEditor
                     int dx = e.X - point.X;
                     int dy = e.Y - point.Y;
 
-                    //f.X += dx;
-                    //f.Y += dy;
                     canvas.Refresh();
 
                     point = e.Location;
@@ -117,7 +121,7 @@ namespace GraphicsEditor
                     {
                         manipulator.Drag(dx, dy);
                         manipulator.Update();
-                    }
+                    }                  
                 }
             }
         }
@@ -156,8 +160,31 @@ namespace GraphicsEditor
             {
                 manipulator.Draw(e.Graphics, Pens.Red);
             }
+        }
 
-
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (history.History.Count > 0)
+            {
+                manipulator.Clear();
+                (Figure, FigureMemento) top = history.History.Pop();
+                f = top.Item1;
+                f.RestoreState(top.Item2);
+                if (f.width == 0)
+                {
+                    foreach (Figure item in figures)
+                    {
+                        if (item == f)
+                        {
+                            figures.Remove(item);
+                            break;
+                        }
+                    }
+                    
+                }
+                //manipulator.Update();
+                canvas.Refresh();
+            }
         }
     }
 }

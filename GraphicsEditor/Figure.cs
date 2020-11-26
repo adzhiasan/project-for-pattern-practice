@@ -64,6 +64,19 @@ namespace GraphicsEditor
             this.X = x;
             this.Y = y;
         }
+
+        public FigureMemento SaveState()
+        {
+            return new FigureMemento(X, Y, width, height);
+        }
+
+        public void RestoreState(FigureMemento memento)
+        {
+            this.X = memento.X;
+            this.Y = memento.Y;
+            this.width = memento.Width;
+            this.height = memento.Height;
+        }
     }
 
     abstract class FigureCreator
