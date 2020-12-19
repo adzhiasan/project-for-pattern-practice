@@ -80,19 +80,22 @@ namespace GraphicsEditor
             height = figures.Max(f => f.Y + f.height) - Y;
         }
 
-       /* public override Figure Clone()
-        {            
-            return new Group(X, Y, width, height);
-        }*/
-
-        class GroupCreator: FigureCreator
+        public override Figure Clone()
         {
+            Group cloneGroup = new Group(X,Y, width,height);
+            foreach(var item in figures)
+                cloneGroup.Add(item.Clone());
+            return cloneGroup;
+        }
 
-            Group proto;
+        public class GroupCreator: FigureCreator
+        {
+            public Group Proto { get; set; }
             public override Figure Create(int x, int y, int width, int height)
             {
-                proto = new Group(x, y, width, height);
-                return proto;
+                Figure template = Proto.Clone();
+                template.Move(x, y);
+                return template;
             }
         }
     }

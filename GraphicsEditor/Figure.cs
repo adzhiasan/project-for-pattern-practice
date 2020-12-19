@@ -55,7 +55,7 @@ namespace GraphicsEditor
             }
         }
 
-        //public abstract Figure Clone();
+        public abstract Figure Clone();
 
         public abstract bool Touch(int x, int y);
 

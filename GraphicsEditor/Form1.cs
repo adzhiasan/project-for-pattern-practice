@@ -36,10 +36,18 @@ namespace GraphicsEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Group proto_group = new Group(0, 0, 20,20);
+
             Rectangle.RectCreator rectCreator = new Rectangle.RectCreator();
             Ellipse.EllipseCreator ellipseCreator = new Ellipse.EllipseCreator();
+
+            proto_group.Add(rectCreator.Create(0, 0, 20, 20));
+            proto_group.Add(ellipseCreator.Create(0, 0, 20, 20));
+
+            Group.GroupCreator groupCreator = new Group.GroupCreator() {Proto = proto_group};
+            
             tools = new List<FigureCreator>() {
-            null, rectCreator, ellipseCreator};
+            null, rectCreator, ellipseCreator,groupCreator};
             manipulator = new Manipulator(0, 0, 0, 0);
             group = new Group(0, 0, 0, 0);
             history = new FigureHistory();
@@ -172,19 +180,16 @@ namespace GraphicsEditor
                 f.RestoreState(top.Item2);
                 if (f.width == 0)
                 {
-                    foreach (Figure item in figures)
-                    {
-                        if (item == f)
-                        {
-                            figures.Remove(item);
-                            break;
-                        }
-                    }
-                    
+                            figures.Remove(f);                   
                 }
                 //manipulator.Update();
                 canvas.Refresh();
             }
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            currentTool = tools[3];
         }
     }
 }

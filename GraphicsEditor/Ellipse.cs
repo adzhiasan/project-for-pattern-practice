@@ -25,10 +25,10 @@ class Ellipse : Figure
             return false;
         }
 
-/*        public override Figure Clone()
+        public override Figure Clone()
         {
             return new Ellipse(X, Y, width, height);
-        }*/
+        }
         public class EllipseCreator : FigureCreator
         {
             public override Figure Create(int x, int y, int width, int height)

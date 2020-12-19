@@ -98,5 +98,10 @@ namespace GraphicsEditor
         {
             dragUsing[corner].Drag(Figure, dx, dy);
         }
+
+        public override Figure Clone()
+        {
+            return null;
+        }
     }
 }
